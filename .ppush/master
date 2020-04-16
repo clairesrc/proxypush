@@ -1,0 +1,5 @@
+[pushername]
+hostname="10.0.0.159"
+username="bread"
+command="git push"
+script_path="\\\$HOME/bin/ppush"
