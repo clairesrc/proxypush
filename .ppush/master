@@ -2,4 +2,11 @@
 hostname="10.0.0.159"
 username="bread"
 command="git push"
-script_path="\\\$cfg_username/bin/ppush"
+script_path="/home/\$cfg_username/bin/ppush"
+
+[pusher2name]
+hostname="10.0.0.158"
+username="coffee"
+command="git push"
+script_path="/home/\$cfg_username/bin/ppush"
+
