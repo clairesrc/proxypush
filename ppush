@@ -5,9 +5,10 @@ CONFIG_FILENAME=""
 # print the list of configs from config file
 get_configs()
 {
-   awk -F '[][]' '
+    config_filename=$2
+    awk -F '[][]' '
       NF==3 && $0 ~ /^\[.*\]/ { print $2 }
-   ' ${CONFIG_FILENAME}
+   ' ${config_filename}
 }
 
 # set variables (optionaly prefixed by var_prefix) from config in config file
@@ -15,6 +16,7 @@ set_config_vars()
 {
    typeset config=$1
    typeset var_prefix=$2
+   typeset config_filename=$3
    typeset config_vars
 
    config_vars=$( 
@@ -28,19 +30,20 @@ set_config_vars()
            sub(/^[[:space:]]*/, "");
            sub(/[[:space:]]*=[[:space:]]/, "=");
            print Prefix $0;
-        } ' ${CONFIG_FILENAME} )
+        } ' ${config_filename} )
 
    eval "${config_vars}"
 }
 
 get_pusher_config()
 {
-    for cfg in $(get_configs)
+    config_filename=$2
+    for cfg in $(get_configs ${config_filename})
     do
         if [ "${1}" == "${cfg}" ]
         then
             unset $(set | awk -F= '/^cfg_/  { print $1 }') cfg_
-            set_config_vars ${cfg} cfg_
+            set_config_vars ${cfg} cfg_ ${config_filename}
             set | grep ^cfg_
         fi
     done
@@ -51,9 +54,8 @@ if [ "$1" == "--push" ]; then
     source "$HOME/.ppush/pusher"
     echo "Retrieving repo from master node..."
     scp $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
-    cat /tmp/ppush-master
     CONFIG_FILENAME='/tmp/ppush-master'
-    PUSHER_CONFIG=`get_pusher_config $PUSHER_NAME`
+    PUSHER_CONFIG=`get_pusher_config $PUSHER_NAME $CONFIG_FILENAME`
     echo $PUSHER_CONFIG
     eval $PUSHER_CONFIG
     mkdir -p /tmp/ppush/$PUSHER_NAME
@@ -72,7 +74,7 @@ else
     REPO_ROOT=$2||""
     OPTIONS=$3||""
     CONFIG_FILENAME="$HOME/.ppush/master"
-    eval `get_pusher_config $PUSHER_NAME`
+    eval `get_pusher_config $PUSHER_NAME $CONFIG_FILENAME`
     if [ "${REPO_ROOT}" == "" ]
     then
       REPO_ROOT="$(git rev-parse --show-toplevel)"
