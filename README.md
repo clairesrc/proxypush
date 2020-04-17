@@ -15,7 +15,7 @@ on all machines, master or pusher:
 - install the ppush script to ~/bin
 - add a config file in ~/.ppush/ according to the machine role:
   - `~/.ppush/master`: master server config file defines pushers which specify pusher name, SSH hostname/IP, push command (defaults to `git push`), script parent directory (defaults to `$HOME/bin`), optional master server's repo default root directory absolute path
-  - `~/.ppush/pusher`: pusher server config file only defines master server's SSH hostname/IP, nothing else
+  - `~/.ppush/pusher`: pusher server config file only defines master server's username and SSH hostname/IP, nothing else
 
 ## usage
 
