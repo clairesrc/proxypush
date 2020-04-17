@@ -38,7 +38,6 @@ set_config_vars()
 
 get_pusher_config()
 {
-    # if [ -z "${2}" ]
     for cfg in $(get_configs)
     do
         if [ "${1}" == "${cfg}" ]
@@ -54,7 +53,7 @@ get_pusher_config()
 if [ "$1" == "--push" ]; then
     source $HOME/.ppush/push
     echo "Retrieving repo from master node..."
-    rsync $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-maste
+    rsync $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
     eval `get_pusher_config $PUSHER_NAME`
     mkdir -p /tmp/ppush/$PUSHER_NAME
     rsync $master_username@$master_hostname:$REPO_ROOT /tmp/ppush/$PUSHER_NAME
@@ -67,6 +66,10 @@ if [ "$1" == "--push" ]; then
     exit 1
 else
     get_pusher_config $PUSHER_NAME
+    if [ "${REPO_ROOT}" == "" ]
+    then
+      $REPO_ROOT=`git rev-parse --show-toplevel`
+    fi
     echo "Asking $PUSHER_NAME to push..."
     ssh_command="ssh $cfg_username@$cfg_hostname -t \"$cfg_script_path --push $REPO_ROOT\""
     echo $ssh_command
