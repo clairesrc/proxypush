@@ -57,7 +57,7 @@ if [ "$1" == "--push" ]; then
     echo $PUSHER_CONFIG
     eval $PUSHER_CONFIG
     mkdir -p /tmp/ppush/$PUSHER_NAME
-    scp -r $master_username@$master_hostname:$3 /tmp/ppush/$PUSHER_NAME
+    scp -qr $master_username@$master_hostname:$3 /tmp/ppush/$PUSHER_NAME
     cd /tmp/ppush/$PUSHER_NAME/
     cd $(ls -d * | head -n 1)
     echo "Pushing to remote..."
