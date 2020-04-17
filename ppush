@@ -80,7 +80,7 @@ else
       REPO_ROOT="$(git rev-parse --show-toplevel)"
     fi
     echo "Asking $PUSHER_NAME to push..."
-    ssh_command="ssh $cfg_username@$cfg_hostname -t \"$cfg_script_path --push $PUSHER_NAME $REPO_ROOT '$OPTIONS'\""
+    ssh_command="ssh $cfg_username@$cfg_hostname -t '$cfg_script_path --push $PUSHER_NAME $REPO_ROOT \"$OPTIONS\"'"
     echo $ssh_command
     eval $ssh_command
     exit 1
