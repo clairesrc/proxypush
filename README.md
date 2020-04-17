@@ -14,12 +14,12 @@ on all machines, master or pusher:
 - make sure you have the **rsync** dependency installed
 - install the ppush script to ~/bin
 - add a config file in ~/.ppush/ according to the machine role:
-  - `~/.ppush/master`: master server config file defines pushers which specify pusher name, SSH hostname/IP, push command (defaults to `git push`), script parent directory (defaults to `$HOME/bin`), optional master server's repo default root directory absolute path
+  - `~/.ppush/master`: master server config file defines pushers which specify pusher name, SSH hostname/IP, push command (defaults to `git push`), script parent directory (defaults to `$HOME/bin`)
   - `~/.ppush/pusher`: pusher server config file only defines master server's username and SSH hostname/IP, nothing else
 
 ## usage
 
 From master server, run `$ ppush $PUSHER_NAME [$REPO_ROOT] [$OPTIONS]`
 - `$PUSHER_NAME` is the name of a pusher set in the master server's config file.
-- `$REPO_ROOT` is the absolute path on the master server to the root directory of the repo you want to push. Falls back to value set in master server's config file, or $PWD's git root if neither is set.
+- `$REPO_ROOT` is the absolute path on the master server to the root directory of the repo you want to push. Falls back to $PWD's git root if not set.
 - `$OPTIONS` is appended to the push command defined in the master config file that is executed on the pusher server.
