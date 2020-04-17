@@ -21,5 +21,5 @@ on all machines, master or pusher:
 
 From master server, run `$ ppush $PUSHER_NAME [$REPO_ROOT] [$OPTIONS]`
 - `$PUSHER_NAME` is the name of a pusher set in the master server's config file.
-- `$REPO_ROOT` is the absolute path on the master server to the root directory of the repo you want to push. Falls back to value set in master server's config file, or $PWD if neither is set.
+- `$REPO_ROOT` is the absolute path on the master server to the root directory of the repo you want to push. Falls back to value set in master server's config file, or $PWD's git root if neither is set.
 - `$OPTIONS` is appended to the push command defined in the master config file that is executed on the pusher server.
