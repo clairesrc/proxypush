@@ -59,7 +59,7 @@ if [ "$1" == "--push" ]; then
     echo "Pushing to remote..."
     eval "$cfg_command"
     rm /tmp/ppush-master
-    rm -r /tmp/ppush/$PUSHER_NAME
+    rm -rf /tmp/ppush/$PUSHER_NAME
     echo Done
     exit 1
 else
