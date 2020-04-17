@@ -27,6 +27,6 @@ From master server, run `$ ppush $PUSHER_NAME [$REPO_ROOT $OPTIONS]`
 ## to-do/contribution suggestions
 
 i'll be working on this myself but feel free to open a PR (: 
-- handle the text processing and conditional logic in a more robust scripting language instead of bash+awk
+- handle the config file text processing and conditional logic in a more robust scripting language instead of bash+awk
 - use rsync instead of scp
 - interactive features to kickstart pusher configuration & choosing a pusher
