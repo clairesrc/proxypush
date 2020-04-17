@@ -11,7 +11,7 @@ your code should have its version control remote destination configured (i.e. a 
 ## installation
 
 on all machines, master or pusher:
-- make sure you have the **rsync** dependency installed
+- make sure you have the **scp** binary installed
 - install the ppush script to ~/bin
 - add a config file in ~/.ppush/ according to the machine role:
   - `~/.ppush/master`: master server config file defines pushers which specify pusher name, SSH hostname/IP, push command (defaults to `git push`), script parent directory (defaults to `$HOME/bin`)
