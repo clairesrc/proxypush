@@ -52,12 +52,12 @@ get_pusher_config()
 if [ "$1" == "--push" ]; then
     source "$HOME/.ppush/pusher"
     echo "Retrieving repo from master node..."
-    scp $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master>/dev/null
+    scp $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
     PUSHER_CONFIG=`get_pusher_config $2 /tmp/ppush-master`
     echo $PUSHER_CONFIG
     eval $PUSHER_CONFIG
     mkdir -p /tmp/ppush/$PUSHER_NAME
-    scp -r $master_username@$master_hostname:$3 /tmp/ppush/$PUSHER_NAME>/dev/null
+    scp -r $master_username@$master_hostname:$3 /tmp/ppush/$PUSHER_NAME
     cd /tmp/ppush/$PUSHER_NAME/
     cd $(ls -d * | head -n 1)
     echo "Pushing to remote..."
