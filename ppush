@@ -48,10 +48,10 @@ get_pusher_config()
 
 
 if [ "$1" == "--push" ]; then
-    CONFIG_FILENAME="$HOME/.ppush/pusher"
-    source $CONFIG_FILENAME
+    source "$HOME/.ppush/pusher"
     echo "Retrieving repo from master node..."
     scp $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
+    CONFIG_FILENAME='/tmp/ppush-master'
     PUSHER_CONFIG=`get_pusher_config $PUSHER_NAME`
     echo $PUSHER_CONFIG
     eval $PUSHER_CONFIG
