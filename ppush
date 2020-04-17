@@ -54,7 +54,7 @@ if [ "$1" == "--push" ]; then
     scp $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
     eval `get_pusher_config $PUSHER_NAME`
     mkdir -p /tmp/ppush/$PUSHER_NAME
-    scp $master_username@$master_hostname:$2 /tmp/ppush/$PUSHER_NAME
+    scp -r $master_username@$master_hostname:$2 /tmp/ppush/$PUSHER_NAME
     cd /tmp/ppush/$PUSHER_NAME
     echo "Pushing to remote..."
     eval "$cfg_command"
@@ -70,7 +70,7 @@ else
     eval `get_pusher_config $PUSHER_NAME`
     if [ "${REPO_ROOT}" == "" ]
     then
-      $REPO_ROOT="$(git rev-parse --show-toplevel)"
+      REPO_ROOT="$(git rev-parse --show-toplevel)"
     fi
     echo "Asking $PUSHER_NAME to push..."
     ssh_command="ssh $cfg_username@$cfg_hostname -t \"$cfg_script_path --push $REPO_ROOT\""
