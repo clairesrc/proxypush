@@ -70,7 +70,7 @@ else
     get_pusher_config $PUSHER_NAME
     if [ "${REPO_ROOT}" == "" ]
     then
-      $REPO_ROOT=`git rev-parse --show-toplevel`
+      $REPO_ROOT="$(git rev-parse --show-toplevel)"
     fi
     echo "Asking $PUSHER_NAME to push..."
     ssh_command="ssh $cfg_username@$cfg_hostname -t \"$cfg_script_path --push $REPO_ROOT\""
