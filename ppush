@@ -56,7 +56,7 @@ if [ "$1" == "--push" ]; then
     echo "Retrieving repo from master node..."
     rsync $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-maste
     eval `get_pusher_config $PUSHER_NAME`
-    mkdir -P /tmp/ppush/$PUSHER_NAME
+    mkdir -p /tmp/ppush/$PUSHER_NAME
     rsync $master_username@$master_hostname:$REPO_ROOT /tmp/ppush/$PUSHER_NAME
     cd /tmp/ppush/$PUSHER_NAME
     echo "Pushing to remote..."
