@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONFIG_FILENAME="/home/bread/src/proxypush/.ppush/master"
+CONFIG_FILENAME=""
 PUSHER_NAME=$1
 REPO_ROOT=$2||""
 OPTIONS=$3||""
@@ -51,7 +51,8 @@ get_pusher_config()
 
 
 if [ "$1" == "--push" ]; then
-    source $HOME/.ppush/push
+    CONFIG_FILENAME="$HOME/.ppush/pusher"
+    source $CONFIG_FILENAME
     echo "Retrieving repo from master node..."
     rsync $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
     eval `get_pusher_config $PUSHER_NAME`
@@ -65,6 +66,7 @@ if [ "$1" == "--push" ]; then
     echo Done
     exit 1
 else
+    CONFIG_FILENAME="$HOME/.ppush/pusher"
     get_pusher_config $PUSHER_NAME
     if [ "${REPO_ROOT}" == "" ]
     then
