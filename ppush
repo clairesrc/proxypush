@@ -1,9 +1,6 @@
 #!/bin/bash
 
 CONFIG_FILENAME=""
-PUSHER_NAME=$1
-REPO_ROOT=$2||""
-OPTIONS=$3||""
 
 # print the list of configs from config file
 get_configs()
@@ -57,7 +54,7 @@ if [ "$1" == "--push" ]; then
     rsync $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
     eval `get_pusher_config $PUSHER_NAME`
     mkdir -p /tmp/ppush/$PUSHER_NAME
-    rsync $master_username@$master_hostname:$REPO_ROOT /tmp/ppush/$PUSHER_NAME
+    rsync $master_username@$master_hostname:$2 /tmp/ppush/$PUSHER_NAME
     cd /tmp/ppush/$PUSHER_NAME
     echo "Pushing to remote..."
     eval "$cfg_command"
@@ -66,7 +63,10 @@ if [ "$1" == "--push" ]; then
     echo Done
     exit 1
 else
-    CONFIG_FILENAME="$HOME/.ppush/pusher"
+    PUSHER_NAME=$1
+    REPO_ROOT=$2||""
+    OPTIONS=$3||""
+    CONFIG_FILENAME="$HOME/.ppush/master"
     get_pusher_config $PUSHER_NAME
     if [ "${REPO_ROOT}" == "" ]
     then
