@@ -53,7 +53,7 @@ if [ "$1" == "--push" ]; then
     echo "Retrieving repo from master node..."
     scp $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
     PUSHER_CONFIG=`get_pusher_config $PUSHER_NAME`
-    echo PUSHER_CONFIG
+    echo $PUSHER_CONFIG
     eval $PUSHER_CONFIG
     mkdir -p /tmp/ppush/$PUSHER_NAME
     scp -r $master_username@$master_hostname:$2 /tmp/ppush/$PUSHER_NAME
