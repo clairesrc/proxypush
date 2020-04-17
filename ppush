@@ -5,7 +5,7 @@ CONFIG_FILENAME=""
 # print the list of configs from config file
 get_configs()
 {
-    config_filename=$2
+    config_filename=$1
     awk -F '[][]' '
       NF==3 && $0 ~ /^\[.*\]/ { print $2 }
    ' ${config_filename}
@@ -37,10 +37,11 @@ set_config_vars()
 
 get_pusher_config()
 {
+    config_section=$1
     config_filename=$2
     for cfg in $(get_configs ${config_filename})
     do
-        if [ "${1}" == "${cfg}" ]
+        if [ "${config_section}" == "${cfg}" ]
         then
             unset $(set | awk -F= '/^cfg_/  { print $1 }') cfg_
             set_config_vars ${cfg} cfg_ ${config_filename}
