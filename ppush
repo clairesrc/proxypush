@@ -58,6 +58,7 @@ if [ "$1" == "--push" ]; then
     cd /tmp/ppush/$PUSHER_NAME/
     cd $(ls -d * | head -n 1)
     echo "Pushing to remote..."
+    echo $cfg_command
     eval "$cfg_command"
     rm /tmp/ppush-master
     rm -rf /tmp/ppush/$PUSHER_NAME
