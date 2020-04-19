@@ -85,14 +85,14 @@ elif [ "$1" == "--pull" ]; then
     cd /tmp/ppush/$PUSHER_NAME/
     REPODIR=$(ls -d * | head -n 1)
     ls
-    cd REPODIR
+    cd $REPODIR
     REPOPATH="$PWD"
     echo "Pulling from remote..."
-    # eval "$cfg_pull_command $OPTIONS"
-    # echo "Copying pulled repo in /tmp/ppush/$PUSHER_NAME/ back to master node $REPO_ROOT..."
-    # scp -qr $REPOPATH "$master_username@$master_hostname:$REPO_ROOT/"
-    # rm /tmp/ppush-master
-    # rm -rf /tmp/ppush/$PUSHER_NAME
+    eval "$cfg_pull_command $OPTIONS"
+    echo "Copying pulled repo in /tmp/ppush/$PUSHER_NAME/ back to master node $REPO_ROOT..."
+    scp -qr $REPOPATH "$master_username@$master_hostname:$REPO_ROOT/"
+    rm /tmp/ppush-master
+    rm -rf /tmp/ppush/$PUSHER_NAME
     echo Done
     exit 1
 else
