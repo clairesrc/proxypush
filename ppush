@@ -70,13 +70,39 @@ if [ "$1" == "--push" ]; then
     rm -rf /tmp/ppush/$PUSHER_NAME
     echo Done
     exit 1
+elif [ "$1" == "--pull" ]; then
+    PUSHER_NAME=$2
+    REPO_ROOT=$3
+    OPTIONS=$4||""
+    source "$HOME/.ppush/pusher"
+    echo "Retrieving repo from master node..."
+    scp $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
+    PUSHER_CONFIG=`get_pusher_config $PUSHER_NAME /tmp/ppush-master`
+    eval $PUSHER_CONFIG
+    mkdir -p /tmp/ppush/$PUSHER_NAME
+    scp -qr $master_username@$master_hostname:$REPO_ROOT /tmp/ppush/$PUSHER_NAME
+    cd /tmp/ppush/$PUSHER_NAME/
+    cd $(ls -d * | head -n 1)
+    echo "Pulling from remote..."
+    eval "$cfg_pull_command $OPTIONS"
+    echo "Copying pulled repo back to master node..."
+    scp -qr /tmp/ppush/$PUSHER_NAME $master_username@$master_hostname:$REPO_ROOT
+    rm /tmp/ppush-master
+    rm -rf /tmp/ppush/$PUSHER_NAME
+    echo Done
+    exit 1
 else
     PUSHER_NAME=$1
-    OPTIONS=$2||""
+    MODE=$2||"push"
+    OPTIONS=$3||""
     REPO_ROOT="$(git rev-parse --show-toplevel)"
     eval `get_pusher_config $PUSHER_NAME $HOME/.ppush/master`
     echo "Asking $PUSHER_NAME to push..."
-    ssh_command="ssh $cfg_username@$cfg_hostname -t '$cfg_script_path --push $PUSHER_NAME $REPO_ROOT \"$OPTIONS\"'"
+    if [ "$MODE" == "push" ]; then
+        ssh_command="ssh $cfg_username@$cfg_hostname -t '$cfg_script_path --push $PUSHER_NAME $REPO_ROOT \"$OPTIONS\"'"
+    elif [ "$MODE" == "pull" ]; then
+        ssh_command="ssh $cfg_username@$cfg_hostname -t '$cfg_script_path --pull $PUSHER_NAME $REPO_ROOT \"$OPTIONS\"'"
+    fi
     # echo $ssh_command
     eval $ssh_command
     exit 1
