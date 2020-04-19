@@ -57,14 +57,14 @@ if [ "$1" == "--push" ]; then
     echo "Retrieving repo from master node..."
     scp $master_username@$master_hostname:"/home/$master_username/.ppush/master" /tmp/ppush-master
     PUSHER_CONFIG=`get_pusher_config $PUSHER_NAME /tmp/ppush-master`
-    echo $PUSHER_CONFIG
+    # echo $PUSHER_CONFIG
     eval $PUSHER_CONFIG
     mkdir -p /tmp/ppush/$PUSHER_NAME
     scp -qr $master_username@$master_hostname:$REPO_ROOT /tmp/ppush/$PUSHER_NAME
     cd /tmp/ppush/$PUSHER_NAME/
     cd $(ls -d * | head -n 1)
     echo "Pushing to remote..."
-    echo "$cfg_push_command $OPTIONS"
+    # echo "$cfg_push_command $OPTIONS"
     eval "$cfg_push_command $OPTIONS"
     rm /tmp/ppush-master
     rm -rf /tmp/ppush/$PUSHER_NAME
@@ -72,16 +72,12 @@ if [ "$1" == "--push" ]; then
     exit 1
 else
     PUSHER_NAME=$1
-    REPO_ROOT=$2||""
-    OPTIONS=$3||""
+    OPTIONS=$2||""
+    REPO_ROOT="$(git rev-parse --show-toplevel)"
     eval `get_pusher_config $PUSHER_NAME $HOME/.ppush/master`
-    if [ "${REPO_ROOT}" == "" ]
-    then
-      REPO_ROOT="$(git rev-parse --show-toplevel)"
-    fi
     echo "Asking $PUSHER_NAME to push..."
     ssh_command="ssh $cfg_username@$cfg_hostname -t '$cfg_script_path --push $PUSHER_NAME $REPO_ROOT \"$OPTIONS\"'"
-    echo $ssh_command
+    # echo $ssh_command
     eval $ssh_command
     exit 1
 fi
