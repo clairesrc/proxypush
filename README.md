@@ -24,6 +24,17 @@ From master server, cd to your repo root and run `$ ppush $PUSHER_NAME [$OPERATI
 - `$OPERATION` is either "push" or "pull", defaults to "push"
 - `$OPTIONS` is appended to the push command defined in the master config file that is executed on the pusher server.
 
+## examples
+`$ ppush enterprisegit`
+
+`$ ppush enterprisegit push`
+
+`$ ppush enterprisegit push "--set-upstream origin my-branch"`
+
+`$ ppush enterprisegit pull`
+
+`$ ppush enterprisegit pull "--rebase"`
+
 ## to-do/contribution suggestions
 
 - handle the config file text processing and conditional logic in a more robust scripting language instead of bash+awk
