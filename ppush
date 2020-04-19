@@ -90,7 +90,7 @@ elif [ "$1" == "--pull" ]; then
     echo "Pulling from remote..."
     eval "$cfg_pull_command $OPTIONS"
     echo "Copying pulled repo in /tmp/ppush/$PUSHER_NAME/ back to master node $REPO_ROOT..."
-    scp -qr $REPOPATH "$master_username@$master_hostname:$REPO_ROOT/"
+    scp -qr $REPOPATH/* $master_username@$master_hostname:$REPO_ROOT
     rm /tmp/ppush-master
     rm -rf /tmp/ppush/$PUSHER_NAME
     echo Done
