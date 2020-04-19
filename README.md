@@ -19,9 +19,8 @@ on all machines, master or pusher:
 
 ## usage
 
-From master server, run `$ ppush $PUSHER_NAME [$REPO_ROOT $OPTIONS]`
+From master server, cd to your repo root and run `$ ppush $PUSHER_NAME [$OPTIONS]`
 - `$PUSHER_NAME` is the name of a pusher set in the master server's config file.
-- `$REPO_ROOT` is the absolute path on the master server to the root directory of the repo you want to push. Falls back to $PWD's git root if not set.
 - `$OPTIONS` is appended to the push command defined in the master config file that is executed on the pusher server.
 
 ## to-do/contribution suggestions
