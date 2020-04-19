@@ -37,6 +37,7 @@ From master server, cd to your repo root and run `$ ppush $PUSHER_NAME [$OPERATI
 
 ## to-do/contribution suggestions
 
+- error handling
 - handle the config file text processing and conditional logic in a more robust scripting language instead of bash+awk
 - use rsync instead of scp
 - interactive features to kickstart pusher configuration & choosing a pusher
